@@ -1,0 +1,23 @@
+{
+  "name": "@csvpro/cleaning-engine",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./node": "./src/node.js",
+    "./browser": "./src/browser.js", 
+    "./operations": "./src/operations.js",
+    "./utils/diagnosticAnalyzer": "./src/utils/diagnosticAnalyzer.js",
+    "./utils/helpers": "./src/utils/helpers.js",
+    "./utils/operationSequencer": "./src/utils/operationSequencer.js",
+    "./utils/similarity": "./src/utils/similarity.js",
+    "./utils/enrichment": "./src/utils/enrichment.js",
+    "./utils/schemas": "./src/utils/schemas.js"
+  },
+  "dependencies": {
+    "libphonenumber-js": "^1.12.24",
+    "postal-codes-js": "^2.5.2",
+    "zod": "^4.1.12"
+  }
+}

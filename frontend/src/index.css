@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Add any global, app-wide styles here */
+body {
+  font-family: 'Inter', sans-serif; /* A nice, clean font */
+  background-color: hsl(var(--b1)); /* DaisyUI background variable for smooth theme transitions */
+  color: hsl(var(--bc)); /* DaisyUI base content color variable */
+}
+
+/* Custom scrollbar for a more polished look */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(var(--b2));
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--b3));
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--bc) / 0.5);
+}

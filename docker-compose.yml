@@ -1,0 +1,69 @@
+services:
+  api:
+    container_name: backend-api
+    build:
+      context: .
+      dockerfile: ./backend/Dockerfile
+    command: npm run dev
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend:/app/backend
+      - ./packages:/app/packages
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - minio
+    restart: unless-stopped
+    # Resource limits for API
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 256M
+
+  worker:
+    container_name: backend-worker
+    build:
+      context: .
+      dockerfile: ./backend/Dockerfile
+    command: npm run start:worker
+    volumes:
+      - ./backend:/app/backend
+      - ./packages:/app/packages
+    env_file:
+      - .env
+    depends_on:
+      - api
+      - redis
+      - minio
+    restart: unless-stopped
+    # Resource limits for workers (can scale horizontally)
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 512M
+    environment:
+      - WORKER_CONCURRENCY=3  # Override for Docker environment
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    env_file:
+      - .env
+    command: server /data --console-address ":9001"
+    restart: unless-stopped
